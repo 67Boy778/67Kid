@@ -1,18 +1,27 @@
 const express = require("express");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 
 app.get("/", (req, res) => {
+  res.send("Server is running.");
 });
 
 app.get("/check", (req, res) => {
   const filePath = path.join(__dirname, "file.hta");
 
-  res.download(filePath, (err) => {
-    if (err) {
-      console.error(err);
-      res.status(404).send("File not found.");
+  console.log("Looking for:", filePath);
+
+  if (!fs.existsSync(filePath)) {
+    console.error("File not found:", filePath);
+    return res.status(404).send("file.hta was not found on the server.");
+  }
+
+  res.download(filePath, "file.hta", (err) => {
+    if (err && !res.headersSent) {
+      console.error("Download error:", err);
+      res.status(500).send("Download failed.");
     }
   });
 });
